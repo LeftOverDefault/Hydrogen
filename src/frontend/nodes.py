@@ -120,9 +120,6 @@ def MemberExpression(object, property):
         "property": property
     }
 
-#=============#
-#  FUNCTIONS  #
-#=============#
 
 def CallExpression(callee, arguments: list):
     return {
@@ -130,3 +127,16 @@ def CallExpression(callee, arguments: list):
         "callee": callee,
         "arguments": arguments
     }
+
+#=============#
+#  FUNCTIONS  #
+#=============#
+
+def FunctionDeclaration(id, parameters: list, body: list):
+    return {
+        "type": "FunctionDeclaration",
+        "id": id,
+        "parameters": parameters,
+        "body": body
+    }
+

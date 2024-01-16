@@ -43,6 +43,8 @@ class Parser:
             return self.expression()
         elif self.tokens[0]["type"] == token_types["bool"]:
             return self.expression()
+        elif self.tokens[0]["type"] == token_types["("]:
+            return self.expression()
         elif self.tokens[0]["type"] == keywords["null"]:
             self.shift()
             return NullLiteral()
@@ -123,6 +125,24 @@ class Parser:
                 self.expect(";", "Expected Semicolon after Variable Declaration.")
                 declarations.append(VariableDeclarator(id=id, data_type=data_type, value=value))
             return ConstantDeclaration(declarations=declarations)
+        elif self.tokens[0]["type"] == keywords["def"]:
+            self.shift()
+            id = Identifier(name=self.shift()["value"])
+            parameters = []
+            body = []
+            if self.tokens[0]["type"] == token_types["("]:
+                self.expect("(", "Expected Opening Parenthesis after Function Declaration.")
+                while self.tokens[0]["type"] != token_types[")"]:
+                    if self.tokens[0]["type"] == token_types[","]:
+                        self.shift()
+                    else:
+                        parameters.append(Identifier(name=self.shift()["value"]))
+                self.expect(")", "Expecting Closing Parenthesis after Function Declaration.")
+            self.expect("{", "Expecting Opening Brace after Function Declaration.")
+            while self.tokens[0]["type"] != token_types["}"]:
+                body.append(self.create_nodes())
+            self.expect("}", "Expecting Closing Brace after Function Declaration.")
+            return FunctionDeclaration(id=id, parameters=parameters, body=body)
         elif self.tokens[0]["type"] == token_types["eof"]:
             return {"type": "END_OF_FILE"}
         else:
@@ -134,6 +154,7 @@ class Parser:
             return NumericLiteral(value=int(self.shift()["value"]))
         elif self.tokens[0]["value"] == "(":
             self.shift()
+            print(self.tokens[0])
             expression = self.expression()
             self.expect(")", "Expected Closing Parenthasis.")
             return expression

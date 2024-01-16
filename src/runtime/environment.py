@@ -7,6 +7,7 @@ class Environment:
     def __init__(self, parent=None) -> None:
         self.variables = {}
         self.constants = []
+        self.built_in_methods = ["print"]
         self.parent = parent
         self.define_builtin_methods()
 
