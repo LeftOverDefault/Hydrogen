@@ -76,11 +76,24 @@ class Interpreter:
             return {"id": node["id"], "value": node["value"]}
         elif type == "ConstantDeclarator":
             return {"id": node["id"], "value": node["value"]}
+        elif type == "FunctionDeclaration":
+            function_env = scope.create_child_scope()
+            func_name = node["id"]
+            func_params = []
+            for param in node["params"]:
+                func_params.append(param["name"])
+            body = self.interpret_node(node["body"], function_env)
+            scope.create_function(func_name=func_name, params=func_params, body=body)
         elif type == "ExpressionStatement":
-            expression = self.interpret_node(node["expression"], scope)
-            left = expression["left"]["name"]
-            right = expression["right"]["value"]
-            scope.assign_variable(left, right)
+            if node["expression"]["type"] == "CallExpression":
+                expression = self.interpret_node(node["expression"], scope)
+                left = expression["left"]["name"]
+                right = expression["right"]["value"]
+                scope.assign_variable(left, right)
+            # elif node["expression"]["type"] == "MemberExpression":
+                # expression = self.interpret_node(node["expression"], scope)
+                # object = expression["object"]["name"]
+                # property = expression["property"]["name"]
         elif type == "AssignmentExpression":
             left = node["left"]
             right = self.interpret_node(node["right"], scope)

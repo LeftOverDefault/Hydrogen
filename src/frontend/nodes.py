@@ -112,6 +112,14 @@ def AssignmentExpression(left, right):
         "right": right
     }
 
+
+def MemberExpression(object, property):
+    return {
+        "type": "MemberExpression",
+        "object": object,
+        "property": property
+    }
+
 #=============#
 #  FUNCTIONS  #
 #=============#

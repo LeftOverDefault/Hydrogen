@@ -19,6 +19,10 @@ class Environment:
         self.variables[var_name] = value
 
 
+    def create_function(self, func_name, params, body):
+        self.declare_variable(func_name, {"parameters": params, "body": body})
+
+
     def get_variable(self, var_name):
         if var_name in list(self.variables.keys()):
             if self.variables[var_name] == None:

@@ -53,6 +53,11 @@ class Parser:
                 expression = self.expression()
                 self.expect(";", "Expected Semicolon")
                 return ExpressionStatement(expression=AssignmentExpression(left=identifier, right=expression))
+            elif self.tokens[1]["type"] == token_types["."]:
+                identifier = Identifier(name=self.shift()["value"])
+                self.shift()
+                property = self.create_nodes()
+                return ExpressionStatement(expression=MemberExpression(object=identifier, property=property))
             elif self.tokens[1]["type"] == token_types["("]:
                 identifier = Identifier(name=self.shift()["value"])
                 arguments = []
