@@ -1,4 +1,4 @@
-![Hydrogen](Hydrogen.wiki/img/logo.png)
+<!-- ![Hydrogen](Hydrogen.wiki/img/logo.png) -->
 
 ## About
 Hydrogen is a simple programming language like python, containing similar syntax, logic, and functions.
@@ -11,7 +11,7 @@ Hydrogen is also a good programming language for making games or software due to
 ### Install:
 To install hydrogen, download the installer on the release page and run as administrator.
 <br>
-![Installer](Hydrogen.wiki/img/installer.png)
+<!-- ![Installer](Hydrogen.wiki/img/installer.png) -->
 <br>
 Then press `Next`, this should take you to the modules page, where you can choose which modules you want to install (You can always come back and install other ones later).
 
