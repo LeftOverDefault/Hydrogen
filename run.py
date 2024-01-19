@@ -5,6 +5,7 @@ from src.shell import Shell
 
 
 if __name__ == "__main__":
+    exec_time = time.time()
     os.system(command="cls")
     main = Main()
     shell = Shell()
@@ -16,3 +17,5 @@ if __name__ == "__main__":
         main.run()
     elif mode == "2" or mode.lower() == "shell":
         shell.run()
+
+    print("Estimated Execution Time:", str(round(time.time() - exec_time, 5)) + "s")

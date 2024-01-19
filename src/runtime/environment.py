@@ -11,7 +11,6 @@ class Environment:
         self.parent = parent
         self.define_builtin_methods()
 
-
     def define_builtin_methods(self):
         self.declare_variable(var_name="print", value=lambda args: print_line(args))
         self.declare_variable(var_name="max", value=lambda args: max(args))
@@ -24,14 +23,11 @@ class Environment:
         self.declare_variable(var_name="pi", value=3.141592653589793)
         self.declare_variable(var_name="e", value=2.718281828459045)
 
-
     def declare_variable(self, var_name, value):
         self.variables[var_name] = value
 
-
     def create_function(self, func_name, params, body):
         self.declare_variable(func_name, {"parameters": params, "body": body})
-
 
     def get_variable(self, var_name):
         if var_name in list(self.variables.keys()):
@@ -45,7 +41,6 @@ class Environment:
             else:
                 raise NameError(f"Variable '{var_name}' is not defined.")
 
-
     def assign_variable(self, var_name, value):
         if var_name in self.constants:
             raise SyntaxError(f"Cannot update the value of '{var_name}' as it was declared as Constant.")
@@ -54,10 +49,8 @@ class Environment:
         else:
             self.variables[var_name] = value
 
-
     def contains(self, var_name):
         return var_name in self.variables.keys()
-
 
     def create_child_scope(self):
         return Environment(parent=self)
