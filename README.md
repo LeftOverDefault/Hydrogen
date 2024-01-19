@@ -8,12 +8,12 @@ The language is meant to be easy to learn and understand in order to ease you in
 Hydrogen is also a good programming language for making games or software due to it's efficiency. Hydrogen already comes with some starter projects, including introductory code for teaching users how to both use Hydrogen and analyze it's syntax to build upon the skill of being able read code as if it were just regular english. Included in these starter projects are some example games and software that make use of multiple different methods in order to run.
 
 ## How to Use
-### Install:
+<!-- ### Install:
 To install hydrogen, download the installer on the release page and run as administrator.
 <br>
 ![Installer](img/installer.png)
 <br>
-Then press `Next`, this should take you to the modules page, where you can choose which modules you want to install (You can always come back and install other ones later).
+Then press `Next`, this should take you to the modules page, where you can choose which modules you want to install (You can always come back and install other ones later). -->
 
 ### Uninstall:
 
