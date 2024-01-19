@@ -7,13 +7,22 @@ class Environment:
     def __init__(self, parent=None) -> None:
         self.variables = {}
         self.constants = []
-        self.built_in_methods = ["print"]
+        self.built_in_methods = ["print", "abs", "vec2", "vec3", "max", "min", "sqrt", "quit"]
         self.parent = parent
         self.define_builtin_methods()
 
 
     def define_builtin_methods(self):
-        self.declare_variable("print", lambda args: print_line(args))
+        self.declare_variable(var_name="print", value=lambda args: print_line(args))
+        self.declare_variable(var_name="max", value=lambda args: max(args))
+        self.declare_variable(var_name="min", value=lambda args: min(args))
+        self.declare_variable(var_name="abs", value=lambda args: absolute(args))
+        self.declare_variable(var_name="vec2", value=lambda args: vector_2(args))
+        self.declare_variable(var_name="vec3", value=lambda args: vector_3(args))
+        self.declare_variable(var_name="quit", value=lambda args: quit_func(args))
+        self.declare_variable(var_name="sqrt", value=lambda args: sqrt(args))
+        self.declare_variable(var_name="pi", value=3.141592653589793)
+        self.declare_variable(var_name="e", value=2.718281828459045)
 
 
     def declare_variable(self, var_name, value):

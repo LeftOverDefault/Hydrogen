@@ -54,7 +54,11 @@ class Interpreter:
             for declaration in node["declarations"]:
                 declaration = self.interpret_node(declaration, scope)
                 id = declaration["id"]["name"]
-                value = self.interpret_node(declaration["value"], scope)["value"]
+                value = declaration["value"]
+                if value["type"] == "CallExpression":
+                    value = self.interpret_node(value, scope)
+                else:
+                    value = self.interpret_node(value, scope)["value"]
                 scope.variables[id] = value
         elif type == "ConstantDeclaration":
             for declaration in node["declarations"]:
@@ -112,7 +116,6 @@ class Interpreter:
                     arguments = []
                     for arg in temp_arguments:
                         arguments.append(arg["value"])
-                        
                     # for node in function["body"]:
                         # temp_arguments = node["arguments"]
                         # for arg in temp_arguments:
@@ -134,8 +137,7 @@ class Interpreter:
                     for arg in node["arguments"]:
                         arg = self.interpret_node(arg, scope)["value"]
                         args.append(arg)
-                    scope.variables[name](args)
-                    return None
+                    return scope.variables[name](args)
 
 
                 # if name not in scope.built_in_methods:

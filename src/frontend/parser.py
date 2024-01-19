@@ -106,7 +106,8 @@ class Parser:
             else:
                 self.expect("=", "Expected Equivalence operator after Variable Declaration.")
                 value = self.create_nodes()
-                self.expect(";", "Expected Semicolon after Variable Declaration.")
+                if value["type"] != "CallExpression":
+                    self.expect(";", "Expected Semicolon after Variable Declaration.")
                 declarations.append(VariableDeclarator(id=id, data_type=data_type, value=value))
             return VariableDeclaration(declarations=declarations)
         elif self.tokens[0]["type"] == keywords["const"]:
@@ -171,7 +172,11 @@ class Parser:
             return Identifier(name=self.shift()["value"])
         else:
             value = self.shift()["value"]
-            return NumericLiteral(value=float(value))
+            try:
+                value = int(value)
+                return NumericLiteral(value=int(value))
+            except:
+                return NumericLiteral(value=float(value))
 
 
     def exponent(self):

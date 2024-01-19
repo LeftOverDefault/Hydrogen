@@ -51,7 +51,18 @@ class Lexer:
             elif (self.characters[0] == "+"):
                 self.tokens.append(token(value=self.shift(), token_type=token_types["+"]))
             elif (self.characters[0] == "-"):
-                self.tokens.append(token(value=self.shift(), token_type=token_types["-"]))
+                value = str(self.shift())
+                if is_numeric(self.characters[0]):
+                    number = ""
+                    has_dot = False
+                    while (len(self.characters) > 0 and (is_numeric(self.characters[0]) or (self.characters[0] == "." and has_dot == False))):
+                        if self.characters[0] == "." and has_dot == False:
+                            has_dot = True
+                        number += self.shift()
+                    number = value + number
+                    self.tokens.append(token(value=number, token_type=token_types["number"]))
+                else:
+                    self.tokens.append(token(value=value, token_type=token_types["-"]))
             elif (self.characters[0] == "*"):
                 if self.characters[1] == "*":
                     self.tokens.append(token(value=self.shift() + self.shift(), token_type=token_types["**"]))
