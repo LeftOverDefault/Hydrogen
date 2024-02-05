@@ -70,28 +70,16 @@ class Parser:
                     else:
                         arguments.append(self.create_nodes())
                 self.expect(")", "Expected Closing Parenthesis after function call.")
-                self.expect(";", "Expected Semicolon after function call.")
-                return CallExpression(callee=identifier, arguments=arguments)
+                if self.tokens[0]["type"] == token_types["."]:
+                    self.shift()
+                    property = self.create_nodes()
+                    self.expect(";", "Expected Semicolon after function call.")
+                    return ExpressionStatement(expression=MemberExpression(object=CallExpression(callee=identifier, arguments=arguments), property=property))
+                else:
+                    self.expect(";", "Expected Semicolon after function call.")
+                    return CallExpression(callee=identifier, arguments=arguments)
             else:
                 return self.expression()
-            # identifier = Identifier(self.shift()["value"])
-            # elif self.tokens[0]["type"] == token_types["="]:
-            #     self.shift()
-            #     right = None
-            #     while self.tokens[0]["type"] != token_types[";"]:
-            #         right = self.create_nodes()
-            #     self.expect(";", "Expected Semicolon after Variable Assignment.")
-            #     return ExpressionStatement(expression=AssignmentExpression(left=identifier, right=right))
-            # elif self.tokens[0]["type"] == token_types["+"]:
-            #     self.shift()
-            #     left = identifier
-            #     right = None
-            #     # while self.tokens[0]["type"] != token_types[";"]:
-            #     right = self.create_nodes()
-            #     # self.expect(";", "Expected Semicolon after Variable Assignment.")
-            #     return BinaryExpression(left=left, operator="+", right=right)
-            # else:
-            #     return identifier
         elif self.tokens[0]["type"] == keywords["let"]:
             self.shift()
             id = Identifier(self.shift()["value"])
@@ -142,10 +130,22 @@ class Parser:
             self.expect("{", "Expecting Opening Brace after Function Declaration.")
             while self.tokens[0]["type"] != token_types["}"]:
                 body.append(self.create_nodes())
-            self.expect("}", "Expecting Closing Brace after Function Declaration.")
+            self.expect("}", "Expecting Closing Bracket after Function Declaration.")
             return FunctionDeclaration(id=id, parameters=parameters, body=body)
+        elif self.tokens[0]["type"] == keywords["class"]:
+            self.shift()
+            id = Identifier(name=self.shift()["value"])
+            body = []
+            if self.tokens[0]["type"] == token_types["{"]:
+                self.expect("{", "Expected Opening Bracket after Function Declaration.")
+                while self.tokens[0]["type"] != token_types["}"]:
+                    body.append(self.create_nodes())
+                self.expect("}", "Expecting Closing Bracket after Function Declaration.")
+            return ClassDeclaration(id=id, body=body)
+
+
         elif self.tokens[0]["type"] == token_types["eof"]:
-            return {"type": "END_OF_FILE"}
+            return None
         else:
             raise SyntaxError(f"Unrecognized Token: {self.shift()["value"]}")
 
@@ -155,7 +155,6 @@ class Parser:
             return NumericLiteral(value=int(self.shift()["value"]))
         elif self.tokens[0]["value"] == "(":
             self.shift()
-            print(self.tokens[0])
             expression = self.expression()
             self.expect(")", "Expected Closing Parenthasis.")
             return expression

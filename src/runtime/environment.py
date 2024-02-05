@@ -25,16 +25,22 @@ class Environment:
 
     def declare_variable(self, var_name, value):
         self.variables[var_name] = value
+        return {"value": value}
 
     def create_function(self, func_name, params, body):
-        self.declare_variable(func_name, {"parameters": params, "body": body})
+        return self.declare_variable(func_name, {"type": "function", "parameters": params, "body": body})
+
+
+    def create_class(self, class_name, body):
+        return self.declare_variable(class_name, {"type": "class", "body": body})
+    
 
     def get_variable(self, var_name):
         if var_name in list(self.variables.keys()):
             if self.variables[var_name] == None:
-                return {"value": "null"}
+                return "null"
             else:
-                return {"value": self.variables[var_name]}
+                return self.variables[var_name]
         if self.parent != None:
             if var_name in list(self.parent.variables.keys()):
                 return self.parent.variables[var_name]

@@ -20,6 +20,11 @@ class Main:
             # try:
                 test_content = open(f"./tests/{test}", "r").read()
 
+                self.lexer = Lexer()
+                self.parser = Parser()
+                self.environment = Environment()
+                self.interpreter = Interpreter(self.environment)
+
                 self.lexer.split_code(test_content)
                 self.lexer.tokenize()
                 self.parser.tokens = self.lexer.tokens

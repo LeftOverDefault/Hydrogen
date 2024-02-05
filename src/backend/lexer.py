@@ -66,11 +66,21 @@ class Lexer:
             elif (self.characters[0] == "*"):
                 if self.characters[1] == "*":
                     self.tokens.append(token(value=self.shift() + self.shift(), token_type=token_types["**"]))
+                elif self.characters[1] == "/":
+                    self.shift()
+                    self.shift()
                 else:
                     self.tokens.append(token(value=self.shift(), token_type=token_types["*"]))
             elif (self.characters[0] == "/"):
-                if self.characters[1] == "/":
-                    self.tokens.append(token(value=self.shift() + self.shift(), token_type=token_types["//"]))
+                if self.characters[1] == "*":
+                    self.shift()
+                    self.shift()
+                    while self.characters[0] != "*":
+                        self.shift()
+                    self.shift()
+                    self.shift()
+                # if self.characters[1] == "/":
+                    # self.tokens.append(token(value=self.shift() + self.shift(), token_type=token_types["//"]))
                 else:
                     self.tokens.append(token(value=self.shift(), token_type=token_types["/"]))
             elif (self.characters[0] == "%"):
@@ -137,8 +147,5 @@ class Lexer:
                         number += self.shift()
                     self.tokens.append(token(value=number, token_type=token_types["number"]))
                 else:
-                    # Throw Unknown Character Error
-                    # return None
                     raise SyntaxError(f"Unrecognized Character: {self.characters[0]}")
-
         self.tokens.append(token(value="eof", token_type=token_types["eof"]))

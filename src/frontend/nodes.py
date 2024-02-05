@@ -140,3 +140,15 @@ def FunctionDeclaration(id, parameters: list, body: list):
         "body": body
     }
 
+#===========#
+#  CLASSES  #
+#===========#
+
+def ClassDeclaration(id, body: list):
+    return {
+        "type": "ClassDeclaration",
+        "id": id,
+        # "superClass": super_class,
+        "body": body
+    }
+

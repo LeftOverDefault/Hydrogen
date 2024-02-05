@@ -96,15 +96,6 @@
 #     "Tuple": token_types["tuple"],
 #     "Dict": token_types["dict"],
 # }
-
-
-# def token(value, token_type) -> dict:
-#     return {
-#         "type": token_type,
-#         "value": value,
-#     }
-
-
 token_types = {
     "+": "ADDITION",
     "-": "SUBTRACTION",
@@ -203,6 +194,15 @@ keywords = {
     # "tuple": token_types["tuple"],
     # "dict": token_types["dict"],
 }
+
+# separators = {
+#     "(": token_types["("],
+#     ")": token_types[")"],
+#     "[": token_types["["],
+#     "]": token_types["]"],
+#     "{": token_types["{"],
+#     "}": token_types["}"],
+# }
 
 
 def token(value, token_type: token_types.keys()):

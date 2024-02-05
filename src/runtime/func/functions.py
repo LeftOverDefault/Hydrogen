@@ -71,4 +71,7 @@ def quit_func(args):
     string = ""
     for arg in args:
         string += str(arg) + " "
-    quit(string)
+    if len(string) != 0:
+        quit(string)
+    else:
+        quit()
