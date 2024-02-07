@@ -142,8 +142,24 @@ class Parser:
                     body.append(self.create_nodes())
                 self.expect("}", "Expecting Closing Bracket after Function Declaration.")
             return ClassDeclaration(id=id, body=body)
-
-
+        elif self.tokens[0]["type"] == keywords["import"]:
+            self.shift()
+            library = self.create_nodes()
+            specifiers = None
+            self.expect(";", "Expected Semi-Colon after Import Statement.")
+            return ImportDeclaration(library=library, specifiers=specifiers)
+        elif self.tokens[0]["type"] == keywords["from"]:
+            self.shift()
+            library = self.create_nodes()
+            self.expect("import", "Expected Import Statement after Library Selection.")
+            specifiers = []
+            while self.tokens[0]["type"] != token_types[";"]:
+                if self.tokens[0]["type"] == token_types[","]:
+                    self.shift()
+                else:
+                    specifiers.append(ImportSpecifier(self.create_nodes()))
+            self.expect(";", "Expected Smi-Colon after Import Statement.")
+            return ImportDeclaration(library=library, specifiers=specifiers)
         elif self.tokens[0]["type"] == token_types["eof"]:
             return None
         else:

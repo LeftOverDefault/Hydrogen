@@ -168,6 +168,8 @@ class Interpreter:
                         arg = self.interpret_node(arg, scope)
                         args.append(arg["value"])
                     return scope.variables[name](args)
+        elif node_type == "ImportDeclaration":
+            print(node)
         elif node_type == "EndOfFile":
             return None
         else:

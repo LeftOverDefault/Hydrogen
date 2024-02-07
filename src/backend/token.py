@@ -156,7 +156,7 @@ token_types = {
     "yield": "YIELD",
     "async": "ASYNCHRONOUS",
     "@": "DECORATOR",
-    "import": "IMPORT",
+    "import": "IMPORT_DECLARATION",
     "from": "FROM_IMPORT",
     "null": "NULL",
     "eof": "END_OF_FILE"

@@ -152,3 +152,21 @@ def ClassDeclaration(id, body: list):
         "body": body
     }
 
+
+#==========#
+#  IMPORT  #
+#==========#
+
+def ImportDeclaration(library: dict, specifiers: list):
+    return {
+        "type": "ImportDeclaration",
+        "source": library,
+        "specifiers": specifiers
+    }
+
+
+def ImportSpecifier(name: dict):
+    return {
+        "type": "ImportSpecifier",
+        "name": name
+    }
