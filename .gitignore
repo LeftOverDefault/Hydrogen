@@ -1,0 +1,12 @@
+# .venv/
+# .vscode/
+# run.bat
+# .gitignore
+# .git/
+
+src/__pycache__/
+src/backend/__pycache__/
+src/frontend/__pycache__/
+src/runtime/__pycache__/
+src/runtime/func/__pycache__/
+src/utils/__pycache__/
